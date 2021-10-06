@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
+        <!--SKATE PARKS-->
         <scene sceneID="O4U-W8-Cgt">
             <objects>
                 <tableViewController id="NOd-Z9-Wqm" customClass="MainViewController" customModule="MyPlaces" customModuleProvider="target" sceneMemberID="viewController">
@@ -30,7 +30,7 @@
                             <outlet property="delegate" destination="NOd-Z9-Wqm" id="I8n-EQ-hgw"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="QeO-oo-K3G"/>
+                    <navigationItem key="navigationItem" title="SKATE PARKS" id="QeO-oo-K3G"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="27l-zE-Wvp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -43,6 +43,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ttb-qa-g8U">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="24"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="NOd-Z9-Wqm" kind="relationship" relationship="rootViewController" id="9fM-4n-3ph"/>
