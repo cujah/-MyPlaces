@@ -6,17 +6,20 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MainViewController: UITableViewController {
 
-    var places = Place.getPlaces()
+    // Results - автообновляемый тип контейнера который возвращает запрашиваемые объекты
+    // Результаты отображаются в реальном времени.
+    var places: Results<Place>!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
-        
+        places = realm.objects(Place.self)                                      // self в данном случае для пояснения что нам нужен сам тип данных Place
 
     
     }
@@ -30,7 +33,7 @@ class MainViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return places.count
+        return places.isEmpty ? 0 : places.count
     }
 
     
@@ -38,23 +41,30 @@ class MainViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
 
         let place = places[indexPath.row ]
-        
+
         cell.nameLable.text = place.name
         cell.locationLable.text = place.location
         cell.typeLable.text = place.type
-        
-        if place.image == nil {
-            cell.imageOfPlace.image = UIImage(named: places[indexPath.row].placeImage! )
-        } else {
-            cell.imageOfPlace.image = place.image
-        }
-        
+        cell.imageOfPlace.image = UIImage(data: place.imageData!)
+         
+
         cell.imageOfPlace.layer.cornerRadius = cell.imageOfPlace.frame.size.height / 2
         cell.imageOfPlace.clipsToBounds = true
-        
+
         return cell
     }
      
+    // MARK: Table View Delegate
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let place = places[indexPath.row]
+        let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { _, _ in
+            StorageManager.deleteObject(place)
+            tableView.deleteRows(at: [indexPath], with: .automatic )
+        }
+        
+        return [deleteAction]
+    }
     
 
     // MARK: - Navigation
@@ -71,9 +81,7 @@ class MainViewController: UITableViewController {
         guard let newPlaceVC = segue.source as? NewPlaceViewController else { return }
         
         newPlaceVC.saveNewPlace()
-        
-        places.append(newPlaceVC.newPlace!)
-        
+                
         tableView.reloadData()
         
     }

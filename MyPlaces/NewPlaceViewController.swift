@@ -8,8 +8,7 @@
 import UIKit
 
 class NewPlaceViewController: UITableViewController {
-
-    var newPlace: Place?
+ 
     var imageIsChanged = false
     
     
@@ -22,11 +21,9 @@ class NewPlaceViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
         tableView.tableFooterView = UIView()                        // убираем разлиновку в ячейках без контента
         saveButton.isEnabled = false
-        
         placeName.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         
         
@@ -73,6 +70,7 @@ class NewPlaceViewController: UITableViewController {
 
     func saveNewPlace() {
         
+        
         let image: UIImage?
         
         if imageIsChanged {
@@ -81,11 +79,14 @@ class NewPlaceViewController: UITableViewController {
             image =  #imageLiteral(resourceName: "local")
         }
         
-        newPlace = Place(name: placeName.text!,
-                         location: placeLocation.text,
-                         type: placeType.text,
-                         image: image,
-                         placeImage: nil)
+        let imageData = image?.pngData()                    // метод pngData() позволяет UIImage конвертировать в Data()
+        
+        let newPlace = Place(name: placeName.text!,
+                             location: placeLocation.text,
+                             type: placeType.text,
+                             imageData: imageData)
+        
+        StorageManager.saveObject(newPlace)
     }
 
     @IBAction func cancelAction(_ sender: UIBarButtonItem) { 

@@ -6,41 +6,27 @@
 //
 
 import UIKit
+import RealmSwift
 
-struct Place {
+class Place: Object {
     
-    var name: String
-    var location: String?
-    var type: String?
-    var image: UIImage?
-    var placeImage: String?
+    @Persisted var name = ""
+    @Persisted var location: String?
+    @Persisted var type: String?
+    @Persisted var imageData: Data?
+
     
-    
-    static let placeNames = ["BetankurSkatePlaza",
-                      "СпотПодМостом",
-                      "ЯмаДыбенко",
-                      "Смена",
-                      "Жесть",
-                      "StreetSportAcademy",
-                      "Бугры",
-                      "Черная речка",
-                      "Передовиков",
-                      "Парк 300-Летия",
-                      "Сестроретск рампа",
-                      "VseVPark",
-                      "Ломоносов",
-                      "Молодежное",
-                      "Гатчина"]
-    
-    
-    static func getPlaces() -> [Place] {
+    // convenience - назначенный инициализатор,  для полной инициализации всех свойств в классе
+    // - не является обязательным
+    // - не создает объект,  а присваивает новые значения уже созданному объекту
+    convenience init(name: String, location: String?, type: String?, imageData: Data?) {
+        self.init()                                                  // вызываем инициализатор класса и заполняем все свойства значениями по умолчанию
+        self.name = name
+        self.location = location
+        self.type = type
+        self.imageData = imageData
         
-        var places = [Place]()
         
-        for place in placeNames {
-            places.append(Place(name: place, location: "Санкт-Петербург", type: "cкейтпарк", image: nil, placeImage: place))
-        }
-        return places
     }
     
     
