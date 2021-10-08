@@ -86,6 +86,7 @@
                                     <outlet property="locationLable" destination="U7l-hn-zEe" id="TjK-Bm-fuB"/>
                                     <outlet property="nameLable" destination="VdK-sS-uU4" id="8QP-aE-Dtf"/>
                                     <outlet property="typeLable" destination="rZH-Qw-op1" id="gqo-xT-y7S"/>
+                                    <segue destination="zS4-tZ-ChN" kind="show" identifier="showDetail" id="XL0-9A-8Eh"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -94,7 +95,7 @@
                             <outlet property="delegate" destination="NOd-Z9-Wqm" id="I8n-EQ-hgw"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="SKATE PARKS" id="QeO-oo-K3G">
+                    <navigationItem key="navigationItem" title="SKATE PARKS" largeTitleDisplayMode="never" id="QeO-oo-K3G">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="ZG1-aV-Aej">
                             <connections>
                                 <segue destination="dPg-ez-PB5" kind="presentation" modalTransitionStyle="coverVertical" id="gYE-H2-RoM"/>
@@ -111,7 +112,7 @@
             <objects>
                 <tableViewController id="zS4-tZ-ChN" customClass="NewPlaceViewController" customModule="MyPlaces" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="mKo-87-9Q9">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <inset key="separatorInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
@@ -251,7 +252,7 @@
                             <outlet property="delegate" destination="zS4-tZ-ChN" id="edL-1X-Tal"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="New Place" id="QEF-v1-1uz">
+                    <navigationItem key="navigationItem" title="New Place" largeTitleDisplayMode="always" id="QEF-v1-1uz">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Css-fr-Etq">
                             <connections>
                                 <action selector="cancelAction:" destination="zS4-tZ-ChN" id="lGi-O5-Dkg"/>
@@ -274,14 +275,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FX2-Wj-1y4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="UJm-jm-o3N" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1911.594202898551" y="45.535714285714285"/>
+            <point key="canvasLocation" x="1658" y="46"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="iGO-Uy-xbr">
             <objects>
                 <navigationController id="3Ad-P2-Cak" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ttb-qa-g8U">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="Ttb-qa-g8U">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="24"/>
@@ -329,9 +330,12 @@
                     <viewLayoutGuide key="safeArea" id="B2V-5T-ime"/>
                 </stackView>
             </objects>
-            <point key="canvasLocation" x="1273.913043478261" y="45.535714285714285"/>
+            <point key="canvasLocation" x="1658" y="-669"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="XL0-9A-8Eh"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="Photo" width="195" height="196"/>
         <systemColor name="systemBackgroundColor">

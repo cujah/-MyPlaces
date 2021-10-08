@@ -19,7 +19,7 @@ class MainViewController: UITableViewController {
         super.viewDidLoad()
         
         
-        places = realm.objects(Place.self)                                      // self в данном случае для пояснения что нам нужен сам тип данных Place
+        places = realm.objects(Place.self)                          // self в данном случае для пояснения что нам нужен не объект, а тип данных Place
 
     
     }
@@ -69,10 +69,17 @@ class MainViewController: UITableViewController {
 
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "showDetail" {
+            
+            guard let indexPath = tableView.indexPathForSelectedRow else { return }
+            let place = places[indexPath.row]
+            
+            let newPlaceVC = segue.destination as! NewPlaceViewController
+            newPlaceVC.currentPlace = place
+            
+        }
+        
     }
     
     
@@ -80,7 +87,7 @@ class MainViewController: UITableViewController {
         
         guard let newPlaceVC = segue.source as? NewPlaceViewController else { return }
         
-        newPlaceVC.saveNewPlace()
+        newPlaceVC.savePlace()
                 
         tableView.reloadData()
         
