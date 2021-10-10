@@ -8,12 +8,20 @@
 import UIKit
 import RealmSwift
 
-class MainViewController: UITableViewController {
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    
+    @IBOutlet weak var reversedSortingButton: UIBarButtonItem!
+    
+    
     // Results - автообновляемый тип контейнера который возвращает запрашиваемые объекты
     // Результаты отображаются в реальном времени.
     var places: Results<Place>!
-    
+    var ascendingSorting = true                                     // переменная для сортировки по возрастанию
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,13 +39,13 @@ class MainViewController: UITableViewController {
 //        return 0
 //    }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return places.isEmpty ? 0 : places.count
     }
 
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
 
         let place = places[indexPath.row ]
@@ -53,20 +61,21 @@ class MainViewController: UITableViewController {
 
         return cell
     }
-     
+    
+    
     // MARK: Table View Delegate
     
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let place = places[indexPath.row]
-        let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { _, _ in
-            StorageManager.deleteObject(place)
-            tableView.deleteRows(at: [indexPath], with: .automatic )
-        }
-        
-        return [deleteAction]
+         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, complete in
+             StorageManager.deleteObject(place)
+             tableView.deleteRows(at: [indexPath], with: .automatic)
+             complete(true)
+         }
+            return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
-
+    
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -77,21 +86,46 @@ class MainViewController: UITableViewController {
             
             let newPlaceVC = segue.destination as! NewPlaceViewController
             newPlaceVC.currentPlace = place
-            
         }
-        
     }
     
     
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue ) {
         
         guard let newPlaceVC = segue.source as? NewPlaceViewController else { return }
-        
         newPlaceVC.savePlace()
-                
         tableView.reloadData()
-        
     }
     
-
+    
+    @IBAction func sortSelection(_ sender: UISegmentedControl) {
+        sorting()
+    }
+    
+    
+    @IBAction func reversedSorting(_ sender: UIBarButtonItem) {
+        
+        ascendingSorting.toggle()
+        
+        if ascendingSorting {
+            reversedSortingButton.image = #imageLiteral(resourceName: "AZ")
+        } else {
+            reversedSortingButton.image = #imageLiteral(resourceName: "ZA")
+        }
+        
+        sorting()
+    }
+    
+    
+    private func sorting() {
+        
+        if segmentedControl.selectedSegmentIndex == 0 {
+            places = places.sorted(byKeyPath: "date", ascending: ascendingSorting)
+        } else {
+            places = places.sorted(byKeyPath: "name", ascending: ascendingSorting)
+        }
+        tableView.reloadData()
+    }
+    
+    
 }

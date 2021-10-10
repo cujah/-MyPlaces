@@ -7,17 +7,27 @@
 
 import UIKit
 import CoreData
+import RealmSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        let config = Realm.Configuration(                       // создаем новую конфигурацию (взято из документации к Realm)
+            schemaVersion: 1,                                   // создаем новую schemaVersion, ее версия должна быть выше предыдущей
+            migrationBlock: { migration, oldSchemaVersion in    // клоужер, который будет вызван при обращении к базе в случае
+                if oldSchemaVersion < 1 {                       // если предыдущая schemaVersion меньше установленной
+                // Ничего не нужно делать, Realm автоматически идентифицирует новые свойства и выполнит апдейт текущей конфигурации
+                }
+            })
+        Realm.Configuration.defaultConfiguration = config       // говорим Realm использовать новую схему конфигурации в качестве дефолтной
         return true
+        
     }
 
+    
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
