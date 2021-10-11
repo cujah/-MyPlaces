@@ -17,5 +17,4 @@ class CustomTableViewCell: UITableViewCell {
     
     @IBOutlet weak var typeLable: UILabel!
     
-    
 }

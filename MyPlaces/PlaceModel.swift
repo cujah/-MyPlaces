@@ -15,19 +15,17 @@ class Place: Object {
     @Persisted var type: String?
     @Persisted var imageData: Data?
     @Persisted var date = Date()
+    @Persisted var rating = 0.0
     
     // convenience - назначенный инициализатор,  для полной инициализации всех свойств в классе
     // - не является обязательным
     // - не создает объект,  а присваивает новые значения уже созданному объекту
-    convenience init(name: String, location: String?, type: String?, imageData: Data?) {
+    convenience init(name: String, location: String?, type: String?, imageData: Data?, rating: Double) {
         self.init()                                                  // вызываем инициализатор класса и заполняем все свойства значениями по умолчанию
         self.name = name
         self.location = location
         self.type = type
         self.imageData = imageData
-        
-        
+        self.rating = rating
     }
-    
-    
 }

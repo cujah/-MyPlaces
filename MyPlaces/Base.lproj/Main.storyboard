@@ -145,6 +145,24 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="140" id="6KB-5k-nkk">
+                                        <rect key="frame" x="0.0" y="499.5" width="414" height="140"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6KB-5k-nkk" id="DPP-9J-poK">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="252" placeholderIntrinsicHeight="44" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bZv-7Y-1Hx" customClass="RatingControl" customModule="MyPlaces" customModuleProvider="target">
+                                                    <rect key="frame" x="81" y="48" width="252" height="44"/>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="bZv-7Y-1Hx" firstAttribute="centerY" secondItem="DPP-9J-poK" secondAttribute="centerY" id="RYS-wG-Xac"/>
+                                                <constraint firstItem="bZv-7Y-1Hx" firstAttribute="centerX" secondItem="DPP-9J-poK" secondAttribute="centerX" id="kSv-TW-9gG"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -156,7 +174,7 @@
                     <navigationItem key="navigationItem" title="New Place" largeTitleDisplayMode="always" id="QEF-v1-1uz">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Css-fr-Etq">
                             <connections>
-                                <action selector="cancelAction:" destination="zS4-tZ-ChN" id="lGi-O5-Dkg"/>
+                                <action selector="cancelAction:" destination="zS4-tZ-ChN" id="Epf-a6-Uge"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="a56-yS-UPx">
@@ -170,13 +188,14 @@
                         <outlet property="placeLocation" destination="9kN-RM-hRJ" id="qsF-0H-YIq"/>
                         <outlet property="placeName" destination="g5n-IP-eNF" id="W5l-UG-gsl"/>
                         <outlet property="placeType" destination="ttQ-pq-za0" id="Pgz-rh-tpu"/>
+                        <outlet property="ratingControl" destination="bZv-7Y-1Hx" id="yXf-8o-UuJ"/>
                         <outlet property="saveButton" destination="a56-yS-UPx" id="Pym-P1-f8x"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FX2-Wj-1y4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="UJm-jm-o3N" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1658" y="46"/>
+            <point key="canvasLocation" x="1657.9710144927537" y="45.535714285714285"/>
         </scene>
         <!--SKATE PARKS-->
         <scene sceneID="VKE-zN-doS">
@@ -284,11 +303,10 @@
                         <constraints>
                             <constraint firstItem="ylB-9x-wzx" firstAttribute="leading" secondItem="nDe-2D-go7" secondAttribute="leading" id="4or-J6-ZlC"/>
                             <constraint firstItem="rcX-1R-Aec" firstAttribute="top" secondItem="ylB-9x-wzx" secondAttribute="bottom" constant="1" id="HL5-us-yKH"/>
-                            <constraint firstAttribute="bottom" secondItem="rcX-1R-Aec" secondAttribute="bottom" id="IR1-HK-R6e"/>
+                            <constraint firstItem="rcX-1R-Aec" firstAttribute="bottom" secondItem="ACm-od-Onb" secondAttribute="bottom" id="IR1-HK-R6e"/>
                             <constraint firstItem="ylB-9x-wzx" firstAttribute="trailing" secondItem="nDe-2D-go7" secondAttribute="trailing" id="Wxc-cp-LUH"/>
                             <constraint firstItem="rcX-1R-Aec" firstAttribute="trailing" secondItem="nDe-2D-go7" secondAttribute="trailing" id="eQ1-fn-na9"/>
                             <constraint firstItem="ylB-9x-wzx" firstAttribute="top" secondItem="nDe-2D-go7" secondAttribute="top" id="lT3-Wi-isw"/>
-                            <constraint firstItem="rcX-1R-Aec" firstAttribute="top" secondItem="ylB-9x-wzx" secondAttribute="bottom" constant="1" id="pOy-KV-RZ4"/>
                             <constraint firstItem="rcX-1R-Aec" firstAttribute="leading" secondItem="nDe-2D-go7" secondAttribute="leading" id="zvO-6p-6Dp"/>
                         </constraints>
                     </view>
@@ -370,6 +388,11 @@
             <point key="canvasLocation" x="1658" y="-669"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="bZv-7Y-1Hx">
+            <size key="intrinsicContentSize" width="252" height="44"/>
+        </designable>
+    </designables>
     <inferredMetricsTieBreakers>
         <segue reference="8zV-1c-nLi"/>
     </inferredMetricsTieBreakers>
