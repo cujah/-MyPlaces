@@ -81,43 +81,47 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.imageOfPlace.clipsToBounds = true
         
         
+        
+        let emptyStar = UIImage(systemName: "star")
+        let filledStar = UIImage(systemName: "star.fill")
+        
         switch place.rating {
         case 1:
-            cell.firstRatingImage.image = UIImage(systemName: "star.fill")
-            cell.secondRatingImage.image = UIImage(systemName: "star")
-            cell.thirdRatingImage.image = UIImage(systemName: "star")
-            cell.fourthRatingImage.image = UIImage(systemName: "star")
-            cell.fifthRatingImage.image = UIImage(systemName: "star")
+            cell.firstRatingImage.image = filledStar
+            cell.secondRatingImage.image = emptyStar
+            cell.thirdRatingImage.image = emptyStar
+            cell.fourthRatingImage.image = emptyStar
+            cell.fifthRatingImage.image = emptyStar
         case 2:
-            cell.firstRatingImage.image = UIImage(systemName: "star.fill")
-            cell.secondRatingImage.image = UIImage(systemName: "star.fill")
-            cell.thirdRatingImage.image = UIImage(systemName: "star")
-            cell.fourthRatingImage.image = UIImage(systemName: "star")
-            cell.fifthRatingImage.image = UIImage(systemName: "star")
+            cell.firstRatingImage.image = filledStar
+            cell.secondRatingImage.image = filledStar
+            cell.thirdRatingImage.image = emptyStar
+            cell.fourthRatingImage.image = emptyStar
+            cell.fifthRatingImage.image = emptyStar
         case 3:
-            cell.firstRatingImage.image = UIImage(systemName: "star.fill")
-            cell.secondRatingImage.image = UIImage(systemName: "star.fill")
-            cell.thirdRatingImage.image = UIImage(systemName: "star.fill")
-            cell.fourthRatingImage.image = UIImage(systemName: "star")
-            cell.fifthRatingImage.image = UIImage(systemName: "star")
+            cell.firstRatingImage.image = filledStar
+            cell.secondRatingImage.image = filledStar
+            cell.thirdRatingImage.image = filledStar
+            cell.fourthRatingImage.image = emptyStar
+            cell.fifthRatingImage.image = emptyStar
         case 4:
-            cell.firstRatingImage.image = UIImage(systemName: "star.fill")
-            cell.secondRatingImage.image = UIImage(systemName: "star.fill")
-            cell.thirdRatingImage.image = UIImage(systemName: "star.fill")
-            cell.fourthRatingImage.image = UIImage(systemName: "star.fill")
-            cell.fifthRatingImage.image = UIImage(systemName: "star")
+            cell.firstRatingImage.image = filledStar
+            cell.secondRatingImage.image = filledStar
+            cell.thirdRatingImage.image = filledStar
+            cell.fourthRatingImage.image = filledStar
+            cell.fifthRatingImage.image = emptyStar
         case 5:
-            cell.firstRatingImage.image = UIImage(systemName: "star.fill")
-            cell.secondRatingImage.image = UIImage(systemName: "star.fill")
-            cell.thirdRatingImage.image = UIImage(systemName: "star.fill")
-            cell.fourthRatingImage.image = UIImage(systemName: "star.fill")
-            cell.fifthRatingImage.image = UIImage(systemName: "star.fill")
+            cell.firstRatingImage.image = filledStar
+            cell.secondRatingImage.image = filledStar
+            cell.thirdRatingImage.image = filledStar
+            cell.fourthRatingImage.image = filledStar
+            cell.fifthRatingImage.image = filledStar
         default:
-            cell.firstRatingImage.image = UIImage(systemName: "star")
-            cell.secondRatingImage.image = UIImage(systemName: "star")
-            cell.thirdRatingImage.image = UIImage(systemName: "star")
-            cell.fourthRatingImage.image = UIImage(systemName: "star")
-            cell.fifthRatingImage.image = UIImage(systemName: "star")
+            cell.firstRatingImage.image = emptyStar
+            cell.secondRatingImage.image = emptyStar
+            cell.thirdRatingImage.image = emptyStar
+            cell.fourthRatingImage.image = emptyStar
+            cell.fifthRatingImage.image = emptyStar
         }
         
         
