@@ -19,6 +19,7 @@ class NewPlaceViewController: UITableViewController {
     @IBOutlet weak var placeType: UITextField!
     @IBOutlet weak var ratingControl: RatingControl!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

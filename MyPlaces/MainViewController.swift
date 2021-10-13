@@ -77,9 +77,49 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.typeLable.text = place.type
         cell.imageOfPlace.image = UIImage(data: place.imageData!)
         
-        
         cell.imageOfPlace.layer.cornerRadius = cell.imageOfPlace.frame.size.height / 2
         cell.imageOfPlace.clipsToBounds = true
+        
+        
+        switch place.rating {
+        case 1:
+            cell.firstRatingImage.image = UIImage(systemName: "star.fill")
+            cell.secondRatingImage.image = UIImage(systemName: "star")
+            cell.thirdRatingImage.image = UIImage(systemName: "star")
+            cell.fourthRatingImage.image = UIImage(systemName: "star")
+            cell.fifthRatingImage.image = UIImage(systemName: "star")
+        case 2:
+            cell.firstRatingImage.image = UIImage(systemName: "star.fill")
+            cell.secondRatingImage.image = UIImage(systemName: "star.fill")
+            cell.thirdRatingImage.image = UIImage(systemName: "star")
+            cell.fourthRatingImage.image = UIImage(systemName: "star")
+            cell.fifthRatingImage.image = UIImage(systemName: "star")
+        case 3:
+            cell.firstRatingImage.image = UIImage(systemName: "star.fill")
+            cell.secondRatingImage.image = UIImage(systemName: "star.fill")
+            cell.thirdRatingImage.image = UIImage(systemName: "star.fill")
+            cell.fourthRatingImage.image = UIImage(systemName: "star")
+            cell.fifthRatingImage.image = UIImage(systemName: "star")
+        case 4:
+            cell.firstRatingImage.image = UIImage(systemName: "star.fill")
+            cell.secondRatingImage.image = UIImage(systemName: "star.fill")
+            cell.thirdRatingImage.image = UIImage(systemName: "star.fill")
+            cell.fourthRatingImage.image = UIImage(systemName: "star.fill")
+            cell.fifthRatingImage.image = UIImage(systemName: "star")
+        case 5:
+            cell.firstRatingImage.image = UIImage(systemName: "star.fill")
+            cell.secondRatingImage.image = UIImage(systemName: "star.fill")
+            cell.thirdRatingImage.image = UIImage(systemName: "star.fill")
+            cell.fourthRatingImage.image = UIImage(systemName: "star.fill")
+            cell.fifthRatingImage.image = UIImage(systemName: "star.fill")
+        default:
+            cell.firstRatingImage.image = UIImage(systemName: "star")
+            cell.secondRatingImage.image = UIImage(systemName: "star")
+            cell.thirdRatingImage.image = UIImage(systemName: "star")
+            cell.fourthRatingImage.image = UIImage(systemName: "star")
+            cell.fifthRatingImage.image = UIImage(systemName: "star")
+        }
+        
         
         return cell
     }
