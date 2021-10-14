@@ -11,36 +11,48 @@ import CoreLocation
 
 class MapViewController: UIViewController {
 
+    @IBOutlet weak var mapPinImage: UIImageView!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak var doneButton: UIButton!
     
     var place = Place()
     let annotationIdentifier = "annotationIdentifier"
     let locationManager = CLLocationManager()                     // отвечает за настройку и работу служб геолокации
     let regionInMeters = 10_000.00
+    var incomeSegueIdentifier = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-        setupPlacemark()
+        setupMapView()
         checkLocationServices()
     }
 
         
     @IBAction func centerViewInUserLocation() {
         
-        if let location = locationManager.location?.coordinate {        // если удается определить местоположение пользователя
-            let region = MKCoordinateRegion(center: location,
-                                            latitudinalMeters: regionInMeters,
-                                            longitudinalMeters: regionInMeters)
-            mapView.setRegion(region, animated: true)
-        }
+        showUserLocation()
+        
+    }
+    
+    @IBAction func doneButtonPressed() {
+        
     }
     
     @IBAction func closeVC() {
         dismiss(animated: true)
     }
     
-
+    private func setupMapView() {
+        if incomeSegueIdentifier == "showPlace" {
+            setupPlacemark()
+            mapPinImage.isHidden = true
+            addressLabel.isHidden = true
+            doneButton.isHidden = true
+        }
+    }
+    
     private func setupPlacemark(){
         guard let location = place.location else { return }
         
@@ -86,6 +98,16 @@ class MapViewController: UIViewController {
         }
     }
     
+    private func showUserLocation() {
+        
+        if let location = locationManager.location?.coordinate {        // если удается определить местоположение пользователя
+            let region = MKCoordinateRegion(center: location,
+                                            latitudinalMeters: regionInMeters,
+                                            longitudinalMeters: regionInMeters)
+            mapView.setRegion(region, animated: true)
+        }
+    }
+    
     private func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default)
@@ -102,6 +124,7 @@ class MapViewController: UIViewController {
     private func checkLocationAutorization() {           // проверка статуса на разрешение испрользования геолокации
         switch locationManager.authorizationStatus {        // возвращает статусов состояний использ. геолокации:
         case .authorizedWhenInUse:                          // разрешено при использовании приложения
+            if incomeSegueIdentifier == "getAddress" { showUserLocation() }
             mapView.showsUserLocation = true
             break
         case .denied:                                       // не разрешено
