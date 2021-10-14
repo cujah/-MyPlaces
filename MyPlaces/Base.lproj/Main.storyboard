@@ -238,15 +238,29 @@
                                     <action selector="closeVC" destination="vRq-16-xEg" eventType="touchUpInside" id="Tmk-Vc-ino"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RRo-d3-dv9">
+                                <rect key="frame" x="324" y="718" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="KvF-ws-WyQ"/>
+                                    <constraint firstAttribute="height" constant="50" id="hj4-1a-Ead"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="Location"/>
+                                <connections>
+                                    <action selector="centerViewInUserLocation" destination="vRq-16-xEg" eventType="touchUpInside" id="DWd-WL-va0"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="5B4-rV-BiG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="5B4-rV-BiG" firstAttribute="trailing" secondItem="6Fa-27-aE5" secondAttribute="trailing" constant="40" id="3MK-p0-7pC"/>
+                            <constraint firstItem="5B4-rV-BiG" firstAttribute="bottom" secondItem="RRo-d3-dv9" secondAttribute="bottom" constant="40" id="PED-aJ-y4J"/>
                             <constraint firstAttribute="bottom" secondItem="AWu-LC-SW2" secondAttribute="bottom" id="Rzm-en-uoz"/>
                             <constraint firstItem="AWu-LC-SW2" firstAttribute="top" secondItem="VHU-HV-9A8" secondAttribute="top" id="ZIe-7P-yvt"/>
                             <constraint firstItem="AWu-LC-SW2" firstAttribute="trailing" secondItem="5B4-rV-BiG" secondAttribute="trailing" id="kpi-18-QHD"/>
                             <constraint firstItem="AWu-LC-SW2" firstAttribute="leading" secondItem="5B4-rV-BiG" secondAttribute="leading" id="u1a-Mo-uys"/>
+                            <constraint firstItem="5B4-rV-BiG" firstAttribute="trailing" secondItem="RRo-d3-dv9" secondAttribute="trailing" constant="40" id="uuC-Wn-Zsd"/>
                             <constraint firstItem="6Fa-27-aE5" firstAttribute="top" secondItem="5B4-rV-BiG" secondAttribute="top" constant="40" id="xV8-vT-Sgt"/>
                         </constraints>
                     </view>
@@ -478,6 +492,7 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="AZ" width="25" height="24"/>
+        <image name="Location" width="128" height="128"/>
         <image name="Photo" width="195" height="196"/>
         <image name="cancel" width="128" height="128"/>
         <image name="map" width="50" height="50"/>

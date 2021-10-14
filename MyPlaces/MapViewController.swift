@@ -16,6 +16,7 @@ class MapViewController: UIViewController {
     var place = Place()
     let annotationIdentifier = "annotationIdentifier"
     let locationManager = CLLocationManager()                     // отвечает за настройку и работу служб геолокации
+    let regionInMeters = 10_000.00
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,16 @@ class MapViewController: UIViewController {
     }
 
         
+    @IBAction func centerViewInUserLocation() {
+        
+        if let location = locationManager.location?.coordinate {        // если удается определить местоположение пользователя
+            let region = MKCoordinateRegion(center: location,
+                                            latitudinalMeters: regionInMeters,
+                                            longitudinalMeters: regionInMeters)
+            mapView.setRegion(region, animated: true)
+        }
+    }
+    
     @IBAction func closeVC() {
         dismiss(animated: true)
     }
@@ -66,8 +77,21 @@ class MapViewController: UIViewController {
             setupLocationManager()
             checkLocationAutorization()
         } else {
-            // crate alert controller with instuctions how to turn on the location services
+        // откладваем вызов алерта на 1 сек(иначе не отобразится), тк вызов во viewDidLoad идет еще до загрузки view
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.showAlert(
+                    title: "Location services are disabled",
+                    message: "To enable it go: Settings -> Privacy -> Location Services and turn it on")
+            }
         }
+    }
+    
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        
+        alert.addAction(okAction)
+        present(alert, animated: true )
     }
     
     private func setupLocationManager() {
@@ -81,7 +105,11 @@ class MapViewController: UIViewController {
             mapView.showsUserLocation = true
             break
         case .denied:                                       // не разрешено
-            // show alert controller
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.showAlert(
+                    title: "Your location is not available",
+                    message: "To give permission go to Settings -> Privacy -> Location Services -> MyPlaces")
+            }
             break
         case .notDetermined:                                // статус не определен (еще не был сделан выбор)
             locationManager.requestWhenInUseAuthorization() // делаем запрос на разрешение использ. геолокации
