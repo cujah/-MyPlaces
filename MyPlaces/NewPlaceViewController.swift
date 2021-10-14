@@ -84,13 +84,14 @@ class NewPlaceViewController: UITableViewController {
         else { return }
         
         mapVC.incomeSegueIdentifier = identifier
+        mapVC.mapViewControllerDelegate = self
         
         if identifier == "showPlace" {
             mapVC.place.name = placeName.text!                      // передаем параметры непосредственно из полей
             mapVC.place.location = placeLocation.text
             mapVC.place.type = placeType.text
             mapVC.place.imageData = placeImage.image?.pngData()
-        } 
+        }
         
     }
     
@@ -203,4 +204,11 @@ extension NewPlaceViewController: UIImagePickerControllerDelegate {
         
     }
     
+}
+
+
+extension NewPlaceViewController: MapViewControllerDelegate {
+    func getAddress(_ address: String?) {
+        placeLocation.text = address
+    }
 }
