@@ -24,6 +24,8 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addressLabel.text = ""
         mapView.delegate = self
         setupMapView()
         checkLocationServices()
@@ -57,7 +59,7 @@ class MapViewController: UIViewController {
         guard let location = place.location else { return }
         
         let geocoder = CLGeocoder()                                     // преобразует адрес в координаты
-        geocoder.geocodeAddressString(location) { placemarks, error in  // geocodeAddressString координаты из string
+        geocoder.geocodeAddressString(location) { (placemarks, error) in  // geocodeAddressString координаты из string
             if let error = error {
                 print (error)
                 return
@@ -107,6 +109,16 @@ class MapViewController: UIViewController {
             mapView.setRegion(region, animated: true)
         }
     }
+    
+    private func getCenterLocation(for mapView: MKMapView) -> CLLocation {
+        
+        let latitude = mapView.centerCoordinate.latitude        // получаем широту
+        let longitude = mapView.centerCoordinate.longitude      // получаем долготу
+        
+        return CLLocation(latitude: latitude, longitude: longitude) // возвращаем координаты точки цента экрана
+    }
+    
+    
     
     private func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -178,6 +190,48 @@ extension MapViewController: MKMapViewDelegate {
         return annotationView
         
     }
+    
+    // данный метот срабатывает каждый раз при смене отображаемого на экране региона
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        
+        let center = getCenterLocation(for: mapView)
+        let geocoder = CLGeocoder()
+        
+        // метод reverseGeocodeLocation принимает координаты и completion handler -
+        // данный блок возвращает массив меток соответствующий координатам, а также
+        // может вернуть объект ошибки с причинами, по которым метки не были обнаружены
+        geocoder.reverseGeocodeLocation(center) { (placemarks, error) in
+            if let error =  error {     // проверяем на наличие ошибок
+                print(error)            // если есть, печатаем их и выходим из метода
+                return
+            }
+            
+            guard let placemarks = placemarks else { return } // извлекаем метки (массив должен вернуть 1 метку)
+            let placemark = placemarks.first
+            
+            let streetName = placemark?.thoroughfare        // извлекаем название улицы
+            let buildNumber = placemark?.subThoroughfare    // извлекаем номер дома
+            
+            // Для корректной работы обновлять интерфейс в основном потоке асинхронно
+            DispatchQueue.main.async {
+                
+                if streetName != nil && buildNumber != nil {
+                    self.addressLabel.text = "\(streetName!), \(buildNumber!)"
+                } else if streetName != nil {
+                    self.addressLabel.text = "\(streetName!)"
+                } else {
+                    self.addressLabel.text = ""
+                }
+                
+            }
+            
+            
+            
+            
+        }
+        
+    }
+    
     
 }
 
