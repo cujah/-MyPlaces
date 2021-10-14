@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
 class MapViewController: UIViewController {
 
@@ -14,11 +15,13 @@ class MapViewController: UIViewController {
     
     var place = Place()
     let annotationIdentifier = "annotationIdentifier"
+    let locationManager = CLLocationManager()                     // отвечает за настройку и работу служб геолокации
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-          setupPlacemark()
+        setupPlacemark()
+        checkLocationServices()
     }
 
         
@@ -57,6 +60,43 @@ class MapViewController: UIViewController {
 
     }
     
+    private func checkLocationServices() {
+        
+        if CLLocationManager.locationServicesEnabled() {                // проверка включенных служб геолокаций
+            setupLocationManager()
+            checkLocationAutorization()
+        } else {
+            // crate alert controller with instuctions how to turn on the location services
+        }
+    }
+    
+    private func setupLocationManager() {
+        locationManager.delegate = self      // назначаем делегата для отработки метода locationManager из расширения
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest       // настройка точности определения геолокации
+    }
+    
+    private func checkLocationAutorization() {           // проверка статуса на разрешение испрользования геолокации
+        switch locationManager.authorizationStatus {        // возвращает статусов состояний использ. геолокации:
+        case .authorizedWhenInUse:                          // разрешено при использовании приложения
+            mapView.showsUserLocation = true
+            break
+        case .denied:                                       // не разрешено
+            // show alert controller
+            break
+        case .notDetermined:                                // статус не определен (еще не был сделан выбор)
+            locationManager.requestWhenInUseAuthorization() // делаем запрос на разрешение использ. геолокации
+                                                    // в info.plist "Privacy - Location When In Use Usage Description"
+        case .restricted:                                   // не авторизовано для использ. служб геолокации
+            // alert
+            break
+        case .authorizedAlways:                             // разрешено всегда
+            break
+        @unknown default:
+            print("New case is available")
+        }
+        
+    }
+    
 }
 
 
@@ -86,6 +126,16 @@ extension MapViewController: MKMapViewDelegate {
         
         return annotationView
         
+    }
+    
+}
+
+
+extension MapViewController: CLLocationManagerDelegate {
+    
+    // метод didChangeAuthorization вызывается при каждом изменении статуса авторизации приложения для использования служб геолокации
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        checkLocationAutorization()
     }
     
 }
