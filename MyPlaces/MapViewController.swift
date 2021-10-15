@@ -20,10 +20,15 @@ class MapViewController: UIViewController {
     
     let annotationIdentifier = "annotationIdentifier"
     let locationManager = CLLocationManager()                     // отвечает за настройку и работу служб геолокации
-    let regionInMeters = 10_000.00
+    let regionInMeters = 1000.00
     var incomeSegueIdentifier = ""
     var placeCoordinate: CLLocationCoordinate2D?                     // переменная для хранение координат
     var currentRoutes: [MKOverlay] = []
+    var previousLocation: CLLocation? {
+        didSet {
+            startTrackingUserLocation()
+        }
+    }
     
     
     @IBOutlet weak var mapPinImage: UIImageView!
@@ -54,8 +59,8 @@ class MapViewController: UIViewController {
     }
 
     @IBAction func goButtonPressed() {
-        getDirections()
         removeAllRoutes(routes: currentRoutes)
+        getDirections()
     }
     
     @IBAction func closeVC() {
@@ -132,6 +137,23 @@ class MapViewController: UIViewController {
         }
     }
     
+    
+    private func startTrackingUserLocation() {
+        
+        guard let previousLocation = previousLocation else { return }
+        let center = getCenterLocation(for: mapView)                      // координаты центра отображаемой обл.
+        
+        // если расстояние от предыдущего местоположения пользователя до текущей центральной точки карты больше 50м
+        guard center.distance(from: previousLocation) > 50 else { return }
+        self.previousLocation = center                                  // обновляем предыдущие координаты на текущие
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {           // задержка в 3 сек чтобы показать маршрут
+            self.showUserLocation()                                     // показываем текущее положение пользователя
+        }
+        
+    }
+    
+    
     private func getDirections() {
         
         guard let location = locationManager.location?.coordinate else {
@@ -139,7 +161,7 @@ class MapViewController: UIViewController {
             return
         }
         
-        guard let request = crateDirectionRequest(from: location) else {
+        guard let request = createDirectionsRequest(from: location) else {
             showAlert(title: "Error", message: "Destination is not found")
             return
         }
@@ -165,26 +187,55 @@ class MapViewController: UIViewController {
                 
                 // фокусируем карту чтобы весь маршрут был виден целеком (MapRect определяет зону видимости карты)
                 self.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
-                
-                
-                // работаем с доп. инфо по маршруту(расстояние и время в пути):
-                
-                // дистанция определяется в метрах, поэтому расстояние/1000 и округляем до десятых:
-                let distance = String(format: "%.1f", route.distance / 1000)
-                let timeInterval =  Int(route.expectedTravelTime / 60)                // время определяется в секундах
-                
-                print("Расстояние до места: \(distance) км.")
-                print("Время в пути: \(timeInterval) мин.")
-                
             }
-            
-            self.showDirectionInfoAlert(routes: response.routes)
-            
+            self.showDirectionInfoAlert(routes: response.routes, location: location)
         }
-        
     }
     
-    private func crateDirectionRequest(from coordinate: CLLocationCoordinate2D) -> MKDirections.Request? {
+    
+    private func showDirectionInfoAlert(routes: [MKRoute], location: CLLocationCoordinate2D) {
+        
+        let alert = UIAlertController(title: "Найдены маршруты : \(routes.count)",
+                                      message: nil,
+                                      preferredStyle: .actionSheet)
+        
+        for route in routes {
+            
+            currentRoutes.append(route.polyline)
+            
+            let routeTimeInMinutes = Int(route.expectedTravelTime/60)
+            var routeTime = ""
+            
+            if routeTimeInMinutes > 60 {
+                routeTime = "\(routeTimeInMinutes / 60) ч \(routeTimeInMinutes % 60) мин"
+            } else {
+                routeTime = "\(routeTimeInMinutes) мин"
+            }
+            
+            let distance = String(format: "%.1f", route.distance / 1000) + " км"
+            
+            let routeInfoAction = UIAlertAction(title: routeTime + "  /  " +  distance, style: .default) { _ in
+                self.mapView.removeOverlays(self.currentRoutes)
+                self.mapView.addOverlay(route.polyline)
+                self.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
+                self.locationManager.startUpdatingLocation() // вкл. постоянного отслеж. местоположения пользователя
+                // первоначальная инициализация переменной previousLocation по текущим координатам пользователя:
+                self.previousLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+            }
+            
+            alert.addAction(routeInfoAction)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
+    
+    private func removeAllRoutes(routes: [MKOverlay]) {
+        self.mapView.removeOverlays(self.currentRoutes)
+    }
+    
+    
+    private func createDirectionsRequest(from coordinate: CLLocationCoordinate2D) -> MKDirections.Request? {
         
         guard let destinationCoordinate = placeCoordinate else { return nil }   // координаты места назначения
         let startingLocation = MKPlacemark(coordinate: coordinate)              // точка старта маршрута
@@ -220,48 +271,6 @@ class MapViewController: UIViewController {
     private func setupLocationManager() {
         locationManager.delegate = self      // назначаем делегата для отработки метода locationManager из расширения
         locationManager.desiredAccuracy = kCLLocationAccuracyBest       // настройка точности определения геолокации
-    }
-    
-    
-    private func showDirectionInfoAlert(routes: [MKRoute]) {
-        
-        let alert = UIAlertController(title: "Найдены маршруты : \(routes.count)",
-                                      message: nil,
-                                      preferredStyle: .actionSheet)
-    
-        
-        
-        for route in routes {
-            
-            currentRoutes.append(route.polyline)
-            
-            let routeTimeInMinutes = Int(route.expectedTravelTime/60)
-            var routeTime = ""
-            
-            if routeTimeInMinutes > 60 {
-                routeTime = "\(routeTimeInMinutes / 60) ч \(routeTimeInMinutes % 60) мин"
-            } else {
-                routeTime = "\(routeTimeInMinutes) мин"
-            }
-            
-            let distance = String(format: "%.1f", route.distance / 1000) + " км"
-            
-            let routeInfoAction = UIAlertAction(title: routeTime + "  /  " +  distance, style: .default) { _ in
-                print("Выбран маршрут - \(routeTime) / \(distance)")
-                self.removeAllRoutes(routes: self.currentRoutes)
-                self.mapView.addOverlay(route.polyline)
-                self.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
-            }
-            
-            alert.addAction(routeInfoAction)
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        alert.addAction(cancelAction)
-        present(alert, animated: true)
-    }
-    
-    private func removeAllRoutes(routes: [MKOverlay]) {
-        self.mapView.removeOverlays(self.currentRoutes)
     }
     
     
@@ -328,6 +337,16 @@ extension MapViewController: MKMapViewDelegate {
         
         let center = getCenterLocation(for: mapView)
         let geocoder = CLGeocoder()
+        
+        
+        if incomeSegueIdentifier == "showPlace" && previousLocation != nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {               // с задержкой в 3 сек
+                self.showUserLocation()                                         // обновляем локацию пользователя
+            }
+        }
+        
+        // для освобождением ресурсов связанных с геокодированием рекомендуется делать отмену отложенного запроса:
+        geocoder.cancelGeocode()
         
         // метод reverseGeocodeLocation принимает координаты и completion handler -
         // данный блок возвращает массив меток соответствующий координатам, а также
