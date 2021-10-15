@@ -23,6 +23,8 @@ class MapViewController: UIViewController {
     let regionInMeters = 10_000.00
     var incomeSegueIdentifier = ""
     var placeCoordinate: CLLocationCoordinate2D?                     // переменная для хранение координат
+    var currentRoutes: [MKOverlay] = []
+    
     
     @IBOutlet weak var mapPinImage: UIImageView!
     @IBOutlet weak var mapView: MKMapView!
@@ -53,6 +55,7 @@ class MapViewController: UIViewController {
 
     @IBAction func goButtonPressed() {
         getDirections()
+        removeAllRoutes(routes: currentRoutes)
     }
     
     @IBAction func closeVC() {
@@ -168,11 +171,14 @@ class MapViewController: UIViewController {
                 
                 // дистанция определяется в метрах, поэтому расстояние/1000 и округляем до десятых:
                 let distance = String(format: "%.1f", route.distance / 1000)
-                let timeInterval = route.expectedTravelTime                 // время определяется в секундах
+                let timeInterval =  Int(route.expectedTravelTime / 60)                // время определяется в секундах
                 
                 print("Расстояние до места: \(distance) км.")
-                print("Время в пути: \(timeInterval) сек.")
+                print("Время в пути: \(timeInterval) мин.")
+                
             }
+            
+            self.showDirectionInfoAlert(routes: response.routes)
             
         }
         
@@ -215,6 +221,49 @@ class MapViewController: UIViewController {
         locationManager.delegate = self      // назначаем делегата для отработки метода locationManager из расширения
         locationManager.desiredAccuracy = kCLLocationAccuracyBest       // настройка точности определения геолокации
     }
+    
+    
+    private func showDirectionInfoAlert(routes: [MKRoute]) {
+        
+        let alert = UIAlertController(title: "Найдены маршруты : \(routes.count)",
+                                      message: nil,
+                                      preferredStyle: .actionSheet)
+    
+        
+        
+        for route in routes {
+            
+            currentRoutes.append(route.polyline)
+            
+            let routeTimeInMinutes = Int(route.expectedTravelTime/60)
+            var routeTime = ""
+            
+            if routeTimeInMinutes > 60 {
+                routeTime = "\(routeTimeInMinutes / 60) ч \(routeTimeInMinutes % 60) мин"
+            } else {
+                routeTime = "\(routeTimeInMinutes) мин"
+            }
+            
+            let distance = String(format: "%.1f", route.distance / 1000) + " км"
+            
+            let routeInfoAction = UIAlertAction(title: routeTime + "  /  " +  distance, style: .default) { _ in
+                print("Выбран маршрут - \(routeTime) / \(distance)")
+                self.removeAllRoutes(routes: self.currentRoutes)
+                self.mapView.addOverlay(route.polyline)
+                self.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
+            }
+            
+            alert.addAction(routeInfoAction)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
+    
+    private func removeAllRoutes(routes: [MKOverlay]) {
+        self.mapView.removeOverlays(self.currentRoutes)
+    }
+    
     
     private func checkLocationAutorization() {           // проверка статуса на разрешение испрользования геолокации
         switch locationManager.authorizationStatus {        // возвращает статусов состояний использ. геолокации:
@@ -305,15 +354,10 @@ extension MapViewController: MKMapViewDelegate {
                 } else {
                     self.addressLabel.text = ""
                 }
-                
             }
-            
-            
-            
-            
         }
-        
     }
+    
     
     // метод отображения маршрута на карте (при создании наложения маршрута оно по умолчанию невидимое)
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
