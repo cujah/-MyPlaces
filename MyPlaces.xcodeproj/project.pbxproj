@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0931CFAB2717FA1E0098C290 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931CFAA2717FA1E0098C290 /* MapViewController.swift */; };
+		093D5CDC271D8C5700839BCF /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D5CDB271D8C5500839BCF /* MapManager.swift */; };
+		093D5CE6271FFCBB00839BCF /* RoutesControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D5CE5271FFCBA00839BCF /* RoutesControl.swift */; };
 		09BDD31C271044B6000FC314 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BDD31B271044B6000FC314 /* StorageManager.swift */; };
 		09BDD31E27133F11000FC314 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BDD31D27133F11000FC314 /* RatingControl.swift */; };
 		09E7C724270D904400E00FD1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E7C723270D904400E00FD1 /* AppDelegate.swift */; };
@@ -26,6 +28,8 @@
 
 /* Begin PBXFileReference section */
 		0931CFAA2717FA1E0098C290 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		093D5CDB271D8C5500839BCF /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
+		093D5CE5271FFCBA00839BCF /* RoutesControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesControl.swift; sourceTree = "<group>"; };
 		09BDD31B271044B6000FC314 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		09BDD31D27133F11000FC314 /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		09E7C720270D904400E00FD1 /* MyPlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,9 +84,11 @@
 				09BDD31B271044B6000FC314 /* StorageManager.swift */,
 				09E7C73A270D94B100E00FD1 /* MainViewController.swift */,
 				0931CFAA2717FA1E0098C290 /* MapViewController.swift */,
+				093D5CDB271D8C5500839BCF /* MapManager.swift */,
 				09EC75BD270EE33B00CF25B1 /* NewPlaceViewController.swift */,
 				09EC75B9270DDFDF00CF25B1 /* CustomTableViewCell.swift */,
 				09BDD31D27133F11000FC314 /* RatingControl.swift */,
+				093D5CE5271FFCBA00839BCF /* RoutesControl.swift */,
 				09E7C729270D904400E00FD1 /* Main.storyboard */,
 				09E7C72F270D904700E00FD1 /* Assets.xcassets */,
 				09E7C731270D904700E00FD1 /* LaunchScreen.storyboard */,
@@ -174,6 +180,8 @@
 				09EC75BA270DDFDF00CF25B1 /* CustomTableViewCell.swift in Sources */,
 				0931CFAB2717FA1E0098C290 /* MapViewController.swift in Sources */,
 				09E7C724270D904400E00FD1 /* AppDelegate.swift in Sources */,
+				093D5CE6271FFCBB00839BCF /* RoutesControl.swift in Sources */,
+				093D5CDC271D8C5700839BCF /* MapManager.swift in Sources */,
 				09BDD31E27133F11000FC314 /* RatingControl.swift in Sources */,
 				09E7C726270D904400E00FD1 /* SceneDelegate.swift in Sources */,
 				09E7C72E270D904400E00FD1 /* MyPlaces.xcdatamodeld in Sources */,
