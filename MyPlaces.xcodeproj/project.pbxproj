@@ -59,6 +59,56 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		098C586B27216E4800B7EE3A /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				09E7C73A270D94B100E00FD1 /* MainViewController.swift */,
+				0931CFAA2717FA1E0098C290 /* MapViewController.swift */,
+				09EC75BD270EE33B00CF25B1 /* NewPlaceViewController.swift */,
+				09EC75B9270DDFDF00CF25B1 /* CustomTableViewCell.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		098C586C27216E8B00B7EE3A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				09EC75BB270DE8A700CF25B1 /* PlaceModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		098C586D27216E9A00B7EE3A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				09BDD31D27133F11000FC314 /* RatingControl.swift */,
+				093D5CE5271FFCBA00839BCF /* RoutesControl.swift */,
+				09BDD31B271044B6000FC314 /* StorageManager.swift */,
+				093D5CDB271D8C5500839BCF /* MapManager.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		098C586E27216EAF00B7EE3A /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				09E7C723270D904400E00FD1 /* AppDelegate.swift */,
+				09E7C725270D904400E00FD1 /* SceneDelegate.swift */,
+				09E7C72F270D904700E00FD1 /* Assets.xcassets */,
+				09E7C734270D904700E00FD1 /* Info.plist */,
+			);
+			path = SupportFiles;
+			sourceTree = "<group>";
+		};
+		098C586F27216ECC00B7EE3A /* IBuilder */ = {
+			isa = PBXGroup;
+			children = (
+				09E7C729270D904400E00FD1 /* Main.storyboard */,
+				09E7C731270D904700E00FD1 /* LaunchScreen.storyboard */,
+			);
+			path = IBuilder;
+			sourceTree = "<group>";
+		};
 		09E7C717270D904400E00FD1 = {
 			isa = PBXGroup;
 			children = (
@@ -78,21 +128,11 @@
 		09E7C722270D904400E00FD1 /* MyPlaces */ = {
 			isa = PBXGroup;
 			children = (
-				09E7C723270D904400E00FD1 /* AppDelegate.swift */,
-				09E7C725270D904400E00FD1 /* SceneDelegate.swift */,
-				09EC75BB270DE8A700CF25B1 /* PlaceModel.swift */,
-				09BDD31B271044B6000FC314 /* StorageManager.swift */,
-				09E7C73A270D94B100E00FD1 /* MainViewController.swift */,
-				0931CFAA2717FA1E0098C290 /* MapViewController.swift */,
-				093D5CDB271D8C5500839BCF /* MapManager.swift */,
-				09EC75BD270EE33B00CF25B1 /* NewPlaceViewController.swift */,
-				09EC75B9270DDFDF00CF25B1 /* CustomTableViewCell.swift */,
-				09BDD31D27133F11000FC314 /* RatingControl.swift */,
-				093D5CE5271FFCBA00839BCF /* RoutesControl.swift */,
-				09E7C729270D904400E00FD1 /* Main.storyboard */,
-				09E7C72F270D904700E00FD1 /* Assets.xcassets */,
-				09E7C731270D904700E00FD1 /* LaunchScreen.storyboard */,
-				09E7C734270D904700E00FD1 /* Info.plist */,
+				098C586B27216E4800B7EE3A /* ViewControllers */,
+				098C586D27216E9A00B7EE3A /* Helpers */,
+				098C586C27216E8B00B7EE3A /* Models */,
+				098C586E27216EAF00B7EE3A /* SupportFiles */,
+				098C586F27216ECC00B7EE3A /* IBuilder */,
 				09E7C72C270D904400E00FD1 /* MyPlaces.xcdatamodeld */,
 			);
 			path = MyPlaces;
@@ -335,7 +375,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FHH2Y32H3L;
-				INFOPLIST_FILE = MyPlaces/Info.plist;
+				INFOPLIST_FILE = MyPlaces/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -354,7 +394,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FHH2Y32H3L;
-				INFOPLIST_FILE = MyPlaces/Info.plist;
+				INFOPLIST_FILE = MyPlaces/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -96,7 +96,7 @@ class MapManager {
     // Фокус карты на местоположении пользователя
     func showUserLocation(mapView: MKMapView) {
         
-        if let location = locationManager.location?.coordinate {        // если удается определить местоположение пользователя
+        if let location = locationManager.location?.coordinate {          // определяем местоположение пользователя
             let region = MKCoordinateRegion(center: location,
                                             latitudinalMeters: regionInMeters,
                                             longitudinalMeters: regionInMeters)
