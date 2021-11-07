@@ -19,6 +19,7 @@ class NewPlaceViewController: UITableViewController {
     @IBOutlet weak var placeType: UITextField!
     @IBOutlet weak var ratingControl: RatingControl!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,17 +72,34 @@ class NewPlaceViewController: UITableViewController {
             view.endEditing(true)        // скрываем клавиатуру по тапу на экран вне клавиатуры, кроме первой ячейки
         }
     }
+    
+    
+    // MARK: Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard
+            let identifier = segue.identifier,
+            let mapVC = segue.destination as? MapViewController
+        else { return }
+        
+        mapVC.incomeSegueIdentifier = identifier
+        mapVC.mapViewControllerDelegate = self
+        
+        if identifier == "showPlace" {
+            mapVC.place.name = placeName.text!                      // передаем параметры непосредственно из полей
+            mapVC.place.location = placeLocation.text
+            mapVC.place.type = placeType.text
+            mapVC.place.imageData = placeImage.image?.pngData()
+        }
+        
+    }
+    
+    
 
     func savePlace() {
         
-        let image: UIImage?
-    
-        if imageIsChanged {
-            image = placeImage.image
-        } else {
-            image =  #imageLiteral(resourceName: "local")
-        }
-        
+        let image = imageIsChanged ? placeImage.image : #imageLiteral(resourceName: "local")
         let imageData = image?.pngData()                    // метод pngData() позволяет UIImage конвертировать в Data()
         
         let newPlace = Place(name: placeName.text!,
@@ -186,4 +204,11 @@ extension NewPlaceViewController: UIImagePickerControllerDelegate {
         
     }
     
+}
+
+
+extension NewPlaceViewController: MapViewControllerDelegate {
+    func getAddress(_ address: String?) {
+        placeLocation.text = address
+    }
 }
