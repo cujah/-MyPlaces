@@ -27,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		09284848273862F8008DB1F7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		0931CFAA2717FA1E0098C290 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		093D5CDB271D8C5500839BCF /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
 		093D5CE5271FFCBA00839BCF /* RoutesControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesControl.swift; sourceTree = "<group>"; };
@@ -134,6 +135,7 @@
 				098C586E27216EAF00B7EE3A /* SupportFiles */,
 				098C586F27216ECC00B7EE3A /* IBuilder */,
 				09E7C72C270D904400E00FD1 /* MyPlaces.xcdatamodeld */,
+				09284848273862F8008DB1F7 /* README.md */,
 			);
 			path = MyPlaces;
 			sourceTree = "<group>";
